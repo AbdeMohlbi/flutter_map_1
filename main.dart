@@ -1,5 +1,8 @@
 // https://raphaeldelio.medium.com/getting-started-with-flutter-map-9cf4113f22e9
 // https://www.youtube.com/watch?v=YuwhlhaM1eM
+// https://www.google.com/search?q=hide+the+navigation+bar+flutter&oq=hide+the+navigation+bar+flutter&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIICAEQABgWGB4yCAgCEAAYFhgeMggIAxAAGBYYHtIBCDk3MDJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8#kpvalbx=_DDL4ZeWYM6OSkdUPtcC7iAU_24
+// https://pub.dev/packages/flutter_map
+// https://pub.dev/packages/geolocator
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,17 +13,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Geolocator Example'),
-        ),
-        body: Center(
-          child: LocationWidget(),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'is_it_installed',
+      theme: ThemeData(hintColor: Colors.yellow),
+      home: const LocationWidget(),
     );
   }
 }
@@ -39,6 +40,7 @@ class _LocationWidgetState extends State<LocationWidget> {
       height: 80,
       child: Icon(Icons.add),
       rotate: true);
+
   List<Marker> mark_1 = [];
   void addMarker(LatLng position) {
     setState(() {
@@ -71,21 +73,23 @@ class _LocationWidgetState extends State<LocationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    /*SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );*/
+    return SafeArea(
+      child: Stack(
         children: [
           FlutterMap(
             options: MapOptions(
               initialCenter: LatLng(51.509364, -0.128928),
               initialZoom: 10,
               onTap: abde,
-
               //minZoom: 1,
             ),
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.example.app',
               ),
               PolygonLayer(
                 polygonCulling: false,
