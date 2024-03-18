@@ -26,11 +26,31 @@ class MyApp extends StatelessWidget {
 }
 
 class LocationWidget extends StatefulWidget {
+  const LocationWidget({super.key});
+
   @override
   _LocationWidgetState createState() => _LocationWidgetState();
 }
 
 class _LocationWidgetState extends State<LocationWidget> {
+  Marker m = Marker(
+      point: LatLng(51.509364, -0.128928),
+      width: 80,
+      height: 80,
+      child: Icon(Icons.add),
+      rotate: true);
+  List<Marker> mark_1 = [];
+  void addMarker(LatLng position) {
+    setState(() {
+      mark_1.add(Marker(
+        width: 40.0,
+        height: 40.0,
+        point: position,
+        child: Icon(Icons.add),
+      ));
+    });
+  }
+
   Future<void> _determinePosition() async {
     final permission = await Geolocator.checkPermission();
     final location = await Geolocator.getCurrentPosition();
@@ -38,6 +58,10 @@ class _LocationWidgetState extends State<LocationWidget> {
         52.2165157, 6.9437819, 52.3546274, 4.8285838);
     print(location);
     print(distanceInMeters);
+  }
+
+  void abde(TapPosition a, LatLng b) {
+    print(b.latitude);
   }
 
   @override
@@ -54,6 +78,8 @@ class _LocationWidgetState extends State<LocationWidget> {
             options: MapOptions(
               initialCenter: LatLng(51.509364, -0.128928),
               initialZoom: 10,
+              onTap: abde,
+
               //minZoom: 1,
             ),
             children: [
@@ -68,8 +94,6 @@ class _LocationWidgetState extends State<LocationWidget> {
                       points: [
                         LatLng(36.95, -9.5),
                         LatLng(42.25, -9.5),
-                        LatLng(42.25, -6.2),
-                        LatLng(36.95, -6.2),
                       ],
                       color: Colors.blue.withOpacity(0.5),
                       borderStrokeWidth: 2,
@@ -81,6 +105,12 @@ class _LocationWidgetState extends State<LocationWidget> {
                 markers: [
                   Marker(
                       point: LatLng(51.509364, -0.128928),
+                      width: 80,
+                      height: 80,
+                      child: Icon(Icons.add),
+                      rotate: true),
+                  Marker(
+                      point: LatLng(50.509364, -0.128928),
                       width: 80,
                       height: 80,
                       child: Icon(Icons.person_pin_circle),
